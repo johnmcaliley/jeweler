@@ -116,6 +116,30 @@ class Jeweler
 
       unless yield_gemspec_set_version?
         namespace :version do
+          desc "create a new version, create tag and push to github"
+          task :github_and_tag do
+            Rake::Task['github:release'].invoke
+            Rake::Task['git:release'].invoke
+          end
+
+          desc "bump patch push to github"
+          task :patch_release do
+            Rake::Task['version:bump:patch'].invoke
+            Rake::Task['version:github_and_tag'].invoke
+          end
+
+          desc "bump minor push to github"
+          task :minor_release do
+            Rake::Task['version:bump:minor'].invoke
+            Rake::Task['version:github_and_tag'].invoke
+          end
+
+          desc "bump major push to github"
+          task :major_release do
+            Rake::Task['version:bump:major'].invoke
+            Rake::Task['version:github_and_tag'].invoke
+          end
+          
           desc "Writes out an explicit version. Respects the following environment variables, or defaults to 0: MAJOR, MINOR, PATCH. Also recognizes BUILD, which defaults to nil"
           task :write do
             major, minor, patch, build = ENV['MAJOR'].to_i, ENV['MINOR'].to_i, ENV['PATCH'].to_i, (ENV['BUILD'] || nil )
