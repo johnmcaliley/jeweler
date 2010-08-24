@@ -20,7 +20,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
   gem.authors = ["Josh Nichols"]
   gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
-
+  gem.files.include %w(lib/jeweler/templates/rails3/engine.rb lib/jeweler/templates/rails3/engine_template.erb lib/jeweler/templates/rails3/lib_engine.rb lib/jeweler/templates/rails3/lib_engine_template.erb)
   # dependencies defined in Gemfile
 end
 
