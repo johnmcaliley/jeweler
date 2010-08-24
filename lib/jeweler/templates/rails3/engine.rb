@@ -1,0 +1,1 @@
+<%= render_template 'rails3/engine_template.erb' %>

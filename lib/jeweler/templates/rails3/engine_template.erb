@@ -1,0 +1,14 @@
+require "<%=require_name%>"
+require "rails"
+
+module <%=project_class%>
+  class Engine < Rails::Engine
+      rake_tasks do
+        load "<%=require_name%>/railties/tasks.rake"
+      end
+      
+      #initializer '<%=require_name%>.helper' do |app|
+        #ActionView::Base.send :include, <%=project_class%>Helper
+      #end
+  end
+end

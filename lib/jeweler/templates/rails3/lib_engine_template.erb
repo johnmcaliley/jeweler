@@ -1,0 +1,9 @@
+PATH = File.dirname(__FILE__) + "/<%=require_name%>/"
+
+[ "engine.rb"
+].each do |file|
+   require PATH + file
+ end
+ 
+module <%=project_class%>
+end
