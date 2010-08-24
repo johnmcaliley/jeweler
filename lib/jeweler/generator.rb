@@ -1,6 +1,6 @@
 require 'git'
 require 'erb'
-
+require 'active_support/inflector'
 require 'net/http'
 require 'uri'
 
@@ -53,7 +53,8 @@ class Jeweler
                   :should_setup_rubyforge, :should_use_reek, :should_use_roodi,
                   :development_dependencies,
                   :options,
-                  :git_remote
+                  :git_remote,
+                  :should_create_rails3_engine
 
     def initialize(options = {})
       self.options = options
@@ -91,6 +92,7 @@ class Jeweler
       self.should_use_roodi       = options[:use_roodi]
       self.should_setup_rubyforge = options[:rubyforge]
       self.should_use_bundler     = options[:use_bundler]
+      self.should_create_rails3_engine = options[:rails3_engine]
 
       development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
 
@@ -163,6 +165,38 @@ class Jeweler
     def features_steps_dir
       File.join(features_dir, 'step_definitions')
     end
+    
+    def project_class
+      self.project_name.classify.pluralize
+    end
+    
+    def app_dir
+      'app'
+    end
+    
+    def controllers_dir
+      "#{app_dir}/controllers"
+    end
+    
+    def views_dir
+      "#{app_dir}/views"
+    end
+    
+    def helpers_dir
+      "#{app_dir}/helpers"
+    end
+    
+    def main_dir
+      "#{lib_dir}/#{self.project_name}"
+    end
+    
+    def generators_dir
+      "#{lib_dir}/generators"
+    end
+    
+    def railties_dir
+      "#{main_dir}/railties"
+    end
 
   private
 
@@ -206,6 +240,19 @@ class Jeweler
 
         mkdir_in_target           features_steps_dir
         touch_in_target           File.join(features_steps_dir, steps_filename)
+      end
+      
+      if should_create_rails3_engine
+        mkdir_in_target           app_dir
+        mkdir_in_target           controllers_dir
+        mkdir_in_target           helpers_dir
+        mkdir_in_target           views_dir
+        mkdir_in_target           main_dir
+        output_template_in_target File.join('rails3','engine.rb'), File.join(main_dir,'engine.rb')
+        mkdir_in_target           generators_dir
+        mkdir_in_target           railties_dir
+        touch_in_target           File.join(railties_dir,'tasks.rake')
+        output_template_in_target File.join('rails3','lib_engine_template.erb'), File.join(lib_dir,lib_filename)
       end
     end
 

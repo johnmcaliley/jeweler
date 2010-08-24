@@ -95,6 +95,7 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
                 @use_rubyforge ? '--rubyforge' : nil,
                 @use_roodi ? '--roodi' : nil,
                 @use_reek ? '--reek' : nil,
+                @rails3_engine ? '--rails3_engine' : nil,
                 case @use_bundler
                 when true then '--bundler'
                 when false then '--no-bundler'
