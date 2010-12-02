@@ -98,6 +98,12 @@ class TestOptions < Test::Unit::TestCase
     end
   end
 
+  for_options '--rails3_engine' do
+    should 'enable rails3_engine' do
+      assert_equal true, @options[:rails3_engine]
+    end
+  end
+
   for_options '--reek' do
     should 'enable reek' do
       assert_equal true, @options[:use_reek]
