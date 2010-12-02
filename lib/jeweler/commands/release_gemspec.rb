@@ -2,7 +2,7 @@ require 'pathname'
 
 class Jeweler
   module Commands
-    class ReleaseToGithub
+    class ReleaseGemspec
       attr_accessor :gemspec, :version, :repo, :output, :gemspec_helper, :base_dir
 
       def initialize(attributes = {})
@@ -16,7 +16,7 @@ class Jeweler
       def run
         unless clean_staging_area?
           system "git status"
-          raise "Unclean staging area! Be sure to commit or .gitignore everything first." 
+          raise "Unclean staging area! Be sure to commit or .gitignore everything first. See `git status` above."
         end
 
         repo.checkout('master')
@@ -37,7 +37,7 @@ class Jeweler
         gemspec_gitpath = working_subdir.join(gemspec_helper.path)
         repo.add(gemspec_gitpath.to_s)
         output.puts "Committing #{gemspec_gitpath}"
-        repo.commit "Regenerated gemspec for version #{version}"
+        repo.commit "Regenerate gemspec for version #{version}"
       end
 
       def regenerate_gemspec!

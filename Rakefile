@@ -1,5 +1,6 @@
-require 'rake'
+require 'rubygems'
 require 'bundler'
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -10,26 +11,24 @@ end
 
 $LOAD_PATH.unshift('lib')
 
+require 'rake'
 require 'jeweler'
+
 Jeweler::Tasks.new do |gem|
   gem.name = "jeweler"
   gem.version = Jeweler::Version::STRING
-  gem.summary = "Opinionated tool for creating and managing RubyGem projects"
-  gem.email = "josh@technicalpickles.com"
   gem.homepage = "http://github.com/technicalpickles/jeweler"
+  gem.summary = "Opinionated tool for creating and managing RubyGem projects"
   gem.description = "Simple and opinionated helper for creating Rubygem projects on GitHub"
+  gem.license = "MIT"
   gem.authors = ["Josh Nichols"]
+  gem.email = "josh@technicalpickles.com"
   gem.files.include %w(lib/jeweler/templates/.document lib/jeweler/templates/.gitignore)
   gem.files.include %w(lib/jeweler/templates/rails3/engine.rb lib/jeweler/templates/rails3/engine_template.erb lib/jeweler/templates/rails3/lib_engine.rb lib/jeweler/templates/rails3/lib_engine_template.erb)
   # dependencies defined in Gemfile
 end
 
-Jeweler::GemcutterTasks.new
-
-Jeweler::RubyforgeTasks.new do |t|
-  t.doc_task = :yardoc
-end
-
+Jeweler::RubygemsDotOrgTasks.new
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
@@ -51,7 +50,7 @@ namespace :test do
 end
 
 require 'yard'
-YARD::Rake::YardocTask.new(:yardoc) do |t|
+YARD::Rake::YardocTask.new do |t|
   t.files   = FileList['lib/**/*.rb'].exclude('lib/jeweler/templates/**/*.rb')
 end
 

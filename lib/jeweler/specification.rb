@@ -49,7 +49,8 @@ class Jeweler
         if blank?(files) && repo
           base_dir_with_trailing_separator = File.join(base_dir, "")
 
-          self.files = (repo.ls_files(base_dir).keys - repo.lib.ignored_files).compact.map do |file|
+          ignored_files = repo.lib.ignored_files + [".gitignore"]
+          self.files = (repo.ls_files(base_dir).keys - ignored_files).compact.map do |file|
             File.expand_path(file).sub(base_dir_with_trailing_separator, "")
           end
         end
@@ -65,7 +66,7 @@ class Jeweler
         end
 
         if blank?(extensions)
-          self.extensions = FileList['ext/**/extconf.rb']
+          self.extensions = FileList['ext/**/{extconf,mkrf_conf}.rb']
         end
 
         self.has_rdoc = true
@@ -77,11 +78,11 @@ class Jeweler
         if File.exist?('Gemfile')
           require 'bundler'
           bundler = Bundler.load
-          bundler.dependencies_for(:default).each do |dependency|
-            self.add_dependency dependency.name, dependency.requirement.to_s
+          bundler.dependencies_for(:default, :runtime).each do |dependency|
+            self.add_dependency dependency.name, *dependency.requirement.as_list
           end
           bundler.dependencies_for(:development).each do |dependency|
-            self.add_development_dependency dependency.name, dependency.requirement.to_s
+            self.add_development_dependency dependency.name, *dependency.requirement.as_list
           end
         end
         

@@ -97,7 +97,7 @@ class Jeweler
       development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
 
       # TODO make bundler optional?
-      development_dependencies << ["bundler", ">= 1.0.0.rc.5"]
+      development_dependencies << ["bundler", "~> 1.0.0"]
       development_dependencies << ["jeweler", "~> #{Jeweler::Version::STRING}"]
       development_dependencies << ["rcov", ">= 0"]
 
@@ -211,7 +211,7 @@ class Jeweler
       output_template_in_target '.gitignore'
       output_template_in_target 'Rakefile'
       output_template_in_target 'Gemfile' if should_use_bundler
-      output_template_in_target 'LICENSE'
+      output_template_in_target 'LICENSE.txt'
       output_template_in_target 'README.rdoc'
       output_template_in_target '.document'
 
@@ -227,7 +227,7 @@ class Jeweler
 
       if testing_framework == :rspec
         output_template_in_target File.join(testing_framework.to_s, '.rspec'),
-                                  File.join(test_dir, '.rspec')
+                                  '.rspec'
 
       end
 

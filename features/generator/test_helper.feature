@@ -45,10 +45,7 @@ Feature: generated test or spec
     And I have configured git sanely
     And I want bundler
     When I generate a rspec project named 'the-perfect-gem' that is 'zomg, so good'
-    Then 'spec/spec_helper.rb' requires 'bundler'
-    And 'spec/spec_helper.rb' sets up bundler using the default and development groups
-    And 'spec/spec_helper.rb' requires 'rspec'
-    And 'spec/spec_helper.rb' requires 'rspec/autorun'
+    Then 'spec/spec_helper.rb' requires 'rspec'
     And 'spec/spec_helper.rb' requires 'the-perfect-gem'
 
   Scenario: rspec w/o bundler

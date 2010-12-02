@@ -20,7 +20,8 @@ Feature: generated Rakefile
     And Rakefile has 'zomg, so good' for the Jeweler::Tasks summary
     And Rakefile has 'Descriptive' for the Jeweler::Tasks description
     And Rakefile has 'http://github.com/technicalpickles/the-perfect-gem' for the Jeweler::Tasks homepage
-    And Rakefile instantiates a Jeweler::GemcutterTasks
+    And Rakefile has 'MIT' for the Jeweler::Tasks license
+    And Rakefile instantiates a Jeweler::RubygemsDotOrgTasks
 
   Scenario: bacon
     When I generate a bacon project named 'the-perfect-gem' that is 'zomg, so good'
@@ -88,14 +89,14 @@ Feature: generated Rakefile
   Scenario: no reek
     Given I do not want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile does not require 'reek/adapters/rake_task'
-    And Rakefile does not instantiate a Reek::RakeTask
+    Then Rakefile does not require 'reek/rake/task'
+    And Rakefile does not instantiate a Reek::Rake::Task
 
   Scenario: reek
     Given I want reek
     When I generate a testunit project named 'the-perfect-gem' that is 'zomg, so good'
-    Then Rakefile requires 'reek/adapters/rake_task'
-    And Rakefile instantiates a Reek::RakeTask
+    Then Rakefile requires 'reek/rake/task'
+    And Rakefile instantiates a Reek::Rake::Task
 
   Scenario: no roodi
     Given I do not want roodi
@@ -145,9 +146,11 @@ Feature: generated Rakefile
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
     Then 'Rakefile' requires 'bundler'
     And 'Rakefile' sets up bundler using the default and development groups
+    And Rakefile does not add 'jeweler' as a development dependency to Jeweler::Tasks
 
   Scenario: no bundler
     Given I do not want bundler
     When I generate a project named 'the-perfect-gem' that is 'zomg, so good' and described as 'Descriptive'
     Then 'Rakefile' does not require 'bundler'
     And 'Rakefile' does not setup bundler
+    And Rakefile adds 'jeweler' as a development dependency to Jeweler::Tasks

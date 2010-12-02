@@ -162,6 +162,20 @@ Then /^Rakefile has '(.*)' for the (.*) (.*)$/ do |value, task_class, field|
   assert_match /#{block_variable}\.#{field} = (%Q\{|"|')#{Regexp.escape(value)}(\}|"|')/, task_block
 end
 
+Then /^Rakefile adds '(.*)' as a development dependency to Jeweler::Tasks$/ do |dependency|
+  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  block_variable, task_block = yank_task_info(@rakefile_content, "Jeweler::Tasks")
+
+  assert_match /#{block_variable}\.add_development_dependency "#{dependency}"/, task_block
+end
+
+Then /^Rakefile does not add '(.*)' as a development dependency to Jeweler::Tasks$/ do |dependency|
+  @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
+  block_variable, task_block = yank_task_info(@rakefile_content, "Jeweler::Tasks")
+
+  assert_no_match /#{block_variable}\.add_development_dependency "#{dependency}"/, task_block
+end
+
 Then /^Rakefile has '(.*)' in the Rcov::RcovTask libs$/ do |libs|
   @rakefile_content ||= File.read(File.join(@working_dir, @name, 'Rakefile'))
   block_variable, task_block = yank_task_info(@rakefile_content, 'Rcov::RcovTask')
@@ -186,9 +200,9 @@ Then /^'(.*)' mentions copyright belonging to me in the current year$/ do |file|
 end
 
 
-Then /^LICENSE credits '(.*)'$/ do |copyright_holder|
-  Then "a file named 'the-perfect-gem/LICENSE' is created"
-  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
+Then /^LICENSE\.txt credits '(.*)'$/ do |copyright_holder|
+  Then "a file named 'the-perfect-gem/LICENSE.txt' is created"
+  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE.txt'))
   assert_match copyright_holder, @license_content
 end
 
@@ -198,9 +212,9 @@ Given /^it is the year (\d+)$/ do |year|
 end
 
 
-Then /^LICENSE has a copyright in the year (\d+)$/ do |year|
-  Then "a file named 'the-perfect-gem/LICENSE' is created"
-  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE'))
+Then /^LICENSE\.txt has a copyright in the year (\d+)$/ do |year|
+  Then "a file named 'the-perfect-gem/LICENSE.txt' is created"
+  @license_content ||= File.read(File.join(@working_dir, @name, 'LICENSE.txt'))
   assert_match year, @license_content
 end
 
@@ -351,6 +365,6 @@ end
 Then /^'Gemfile' uses the (.*) source$/ do |source|
   content = File.read(File.join(@working_dir, @name, 'Gemfile'))
 
-  assert_match "source :#{source}", content
+  assert_match %Q{source "http://rubygems.org"}, content
 end
 
