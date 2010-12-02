@@ -167,7 +167,7 @@ class Jeweler
     end
     
     def project_class
-      self.project_name.classify.pluralize
+      self.project_name.gsub("-","_").classify
     end
     
     def app_dir
@@ -176,6 +176,10 @@ class Jeweler
     
     def controllers_dir
       "#{app_dir}/controllers"
+    end
+
+    def models_dir
+      "#{app_dir}/models"
     end
     
     def views_dir
@@ -245,14 +249,15 @@ class Jeweler
       if should_create_rails3_engine
         mkdir_in_target           app_dir
         mkdir_in_target           controllers_dir
+        mkdir_in_target           models_dir        
         mkdir_in_target           helpers_dir
         mkdir_in_target           views_dir
         mkdir_in_target           main_dir
-        output_template_in_target File.join('rails3','engine.rb'), File.join(main_dir,'engine.rb')
+        output_template_in_target File.join('rails3_engine','engine_template.erb'), File.join(main_dir,'engine.rb')
         mkdir_in_target           generators_dir
         mkdir_in_target           railties_dir
         touch_in_target           File.join(railties_dir,'tasks.rake')
-        output_template_in_target File.join('rails3','lib_engine_template.erb'), File.join(lib_dir,lib_filename)
+        output_template_in_target File.join('rails3_engine','lib_engine_template.erb'), File.join(lib_dir,lib_filename)
       end
     end
 
