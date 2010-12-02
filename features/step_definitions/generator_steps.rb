@@ -6,6 +6,14 @@ Given /^I want cucumber stories$/ do
   @use_cucumber = true
 end
 
+Given /^I do not want to create a rails3 engine$/ do
+  @rails3_engine = false
+end
+
+Given /^I want to create a rails3 engine$/ do
+  @rails3_engine = true
+end
+
 Given /^I do not want reek$/ do
   @use_reek = false
 end
@@ -117,6 +125,13 @@ Then /^a directory named '(.*)' is created$/ do |directory|
 
   assert File.exists?(directory), "#{directory} did not exist"
   assert File.directory?(directory), "#{directory} is not a directory"
+end
+
+Then /^a directory named '(.*)' is not created$/ do |directory|
+  directory = File.join(@working_dir, directory)
+
+  assert ! File.exists?(directory), "#{directory} did not exist"
+  assert ! File.directory?(directory), "#{directory} is not a directory"
 end
 
 Then "cucumber directories are created" do
@@ -368,3 +383,36 @@ Then /^'Gemfile' uses the (.*) source$/ do |source|
   assert_match %Q{source "http://rubygems.org"}, content
 end
 
+Then /^'(.*)' has a module based on the class name$/ do |file|
+  content = File.read(File.join(@working_dir, @name, file))
+
+  assert_match %Q{module ThePerfectGem}, content
+end
+
+Then /^'(.*)' is blank$/ do |file|
+  content = File.read(File.join(@working_dir, @name, file))
+
+  assert_match "", content
+end
+
+Then /^'(.*)' subclasses rails engine$/ do |file|
+  content = File.read(File.join(@working_dir, @name, file))
+  
+  assert_match "class Engine < Rails::Engine", content
+end
+
+Then /^'(.*)' has placeholders for initializers and rake task inclusion$/ do |file|
+  content = File.read(File.join(@working_dir, @name, file))
+  
+  assert_match "#rake_tasks do", content
+  assert_match '#load "the-perfect-gem/railties/tasks.rake"', content
+  assert_match "#initializer 'the-perfect-gem.helper' do |app|", content
+  assert_match "#ActionView::Base.send :include, ThePerfectGemHelper", content
+end
+
+Then /^'(.*)' requires the engine$/ do |file|
+  content = File.read(File.join(@working_dir, @name, file))
+  
+  assert_match 'PATH = File.dirname(__FILE__) + "/the-perfect-gem"', content
+  assert_match 'require "#{PATH}/engine.rb"', content
+end
