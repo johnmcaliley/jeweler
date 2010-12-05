@@ -1,4 +1,4 @@
-This for adds a rails3_engine option to the jeweler binary.  If you use this option, the app skeleton directories and the engine file will be added to the gem.
+This fork adds a rails3_engine option to the jeweler binary.  If you use this option, the app skeleton directories and the engine file will be added to the gem.
 
 Usage: 
 
