@@ -1,3 +1,9 @@
+This for adds a rails3_engine option to the jeweler binary.  If you use this option, the app skeleton directories and the engine file will be added to the gem.
+
+Usage: 
+
+jeweler myengine --rails3_engine
+
 # Jeweler: Craft the perfect RubyGem
 
 Jeweler provides the noble ruby developer with two primary features:
