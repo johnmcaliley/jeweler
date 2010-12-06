@@ -201,6 +201,10 @@ class Jeweler
     def railties_dir
       "#{main_dir}/railties"
     end
+    
+    def config_dir
+      "config"
+    end
 
   private
 
@@ -252,6 +256,8 @@ class Jeweler
         mkdir_in_target           models_dir        
         mkdir_in_target           helpers_dir
         mkdir_in_target           views_dir
+        mkdir_in_target           config_dir
+        output_template_in_target File.join('rails3_engine','routes.erb'), File.join(config_dir,'routes.rb')
         mkdir_in_target           main_dir
         output_template_in_target File.join('rails3_engine','engine_template.erb'), File.join(main_dir,'engine.rb')
         mkdir_in_target           generators_dir

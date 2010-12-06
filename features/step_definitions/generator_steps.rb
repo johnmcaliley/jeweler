@@ -410,6 +410,13 @@ Then /^'(.*)' has placeholders for initializers and rake task inclusion$/ do |fi
   assert_match "#ActionView::Base.send :include, ThePerfectGemHelper", content
 end
 
+Then /^'(.*)' has rails application routes block$/ do |file|
+  content = File.read(File.join(@working_dir, @name, file))
+
+  assert_match "Rails.application.routes.draw do\nend", content
+end
+
+
 Then /^'(.*)' requires the engine$/ do |file|
   content = File.read(File.join(@working_dir, @name, file))
   

@@ -13,6 +13,8 @@ Feature: generating rails3 engine directories and files
     And a directory named 'the-perfect-gem/app/helpers' is not created
     And a directory named 'the-perfect-gem/app/models' is not created
     And a directory named 'the-perfect-gem/app/views' is not created
+    And a directory named 'the-perfect-gem/config' is not created
+    And a file named 'the-perfect-gem/config/routes.rb' is not created
     And a directory named 'the-perfect-gem/lib/the-perfect-gem' is not created
     And a file named 'the-perfect-gem/lib/the-perfect-gem/engine.rb' is not created
     And a directory named 'the-perfect-gem/lib/generators' is not created
@@ -30,6 +32,9 @@ Feature: generating rails3 engine directories and files
     And a directory named 'the-perfect-gem/app/helpers' is created
     And a directory named 'the-perfect-gem/app/models' is created
     And a directory named 'the-perfect-gem/app/views' is created
+    And a directory named 'the-perfect-gem/config' is created
+    And a file named 'the-perfect-gem/config/routes.rb' is created
+    And 'config/routes.rb' has rails application routes block
     And a directory named 'the-perfect-gem/lib/the-perfect-gem' is created
 
     And a directory named 'the-perfect-gem/lib/generators' is created
