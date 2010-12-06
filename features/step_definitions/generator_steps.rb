@@ -7,11 +7,11 @@ Given /^I want cucumber stories$/ do
 end
 
 Given /^I do not want to create a rails3 engine$/ do
-  @rails3_engine = false
+  @use_rails3_engine = false
 end
 
 Given /^I want to create a rails3 engine$/ do
-  @rails3_engine = true
+  @use_rails3_engine = true
 end
 
 Given /^I do not want reek$/ do
@@ -103,7 +103,7 @@ When /^I generate a (.*)project named '((?:\w|-|_)+)' that is '([^']*)' and desc
                 @use_rubyforge ? '--rubyforge' : nil,
                 @use_roodi ? '--roodi' : nil,
                 @use_reek ? '--reek' : nil,
-                @rails3_engine ? '--rails3_engine' : nil,
+                @use_rails3_engine ? '--rails3-engine' : nil,
                 case @use_bundler
                 when true then '--bundler'
                 when false then '--no-bundler'

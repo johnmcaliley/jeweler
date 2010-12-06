@@ -54,7 +54,7 @@ class Jeweler
                   :development_dependencies,
                   :options,
                   :git_remote,
-                  :should_create_rails3_engine
+                  :should_use_rails3_engine
 
     def initialize(options = {})
       self.options = options
@@ -92,7 +92,7 @@ class Jeweler
       self.should_use_roodi       = options[:use_roodi]
       self.should_setup_rubyforge = options[:rubyforge]
       self.should_use_bundler     = options[:use_bundler]
-      self.should_create_rails3_engine = options[:rails3_engine]
+      self.should_use_rails3_engine = options[:use_rails3_engine]
 
       development_dependencies << ["cucumber", ">= 0"] if should_use_cucumber
 
@@ -246,7 +246,7 @@ class Jeweler
         touch_in_target           File.join(features_steps_dir, steps_filename)
       end
       
-      if should_create_rails3_engine
+      if should_use_rails3_engine
         mkdir_in_target           app_dir
         mkdir_in_target           controllers_dir
         mkdir_in_target           models_dir        

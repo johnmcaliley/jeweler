@@ -77,8 +77,8 @@ class Jeweler
             self[:use_cucumber] = true
           end
 
-          o.on('--rails3_engine', 'generate rails3 engine directories and files') do
-            self[:rails3_engine] = true
+          o.on('--rails3-engine', 'generate rails3 engine directories and files') do
+            self[:use_rails3_engine] = true
           end
 
           o.separator ""
